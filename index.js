@@ -31,16 +31,16 @@ async function run() {
     await client.connect();
 
     const coffeeCollection = client.db("coffeeDB").collection("coffee");
-
-    app.post("/coffee", async (req, res) => {
-      const coffee = req.body;
-      const result = await coffeeCollection.insertOne(coffee);
-      res.send(result);
-    });
-
+    // Read Data
     app.get("/coffee", async (req, res) => {
       const cursor = coffeeCollection.find();
       const result = await cursor.toArray();
+      res.send(result);
+    });
+    // Post Data
+    app.post("/coffee", async (req, res) => {
+      const coffee = req.body;
+      const result = await coffeeCollection.insertOne(coffee);
       res.send(result);
     });
 
