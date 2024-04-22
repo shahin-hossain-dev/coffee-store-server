@@ -107,6 +107,20 @@ async function run() {
       res.send(result);
     });
 
+    // update user data
+
+    app.patch("/user", async (req, res) => {
+      const user = req.body;
+      const filter = { email: user.email };
+      const updatedUser = {
+        $set: {
+          lastLoggedInUser: user.lastLoggedInUser,
+        },
+      };
+      const result = await userCollection.updateOne(filter, updatedUser);
+      res.send(result);
+    });
+
     // user deleting
     app.delete(`/user/:id`, async (req, res) => {
       const id = req.params.id;
